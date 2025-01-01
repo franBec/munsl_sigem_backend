@@ -1,0 +1,140 @@
+openapi: "3.0.2"
+info:
+  description: Interfaz API de la Municipalidad Ciudad de San Luis - SIGEM Backend
+  title: Municipalidad Ciudad de San Luis - SIGEM Backend
+  version: "1.0"
+servers:
+  - url: http://localhost:8080
+paths:
+  /login:
+    post:
+      tags:
+        - Login
+      description: Permite la autenticación en la aplicación
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      summary: Iniciar sesión
+      responses:
+        '200':
+          description: Inicio de sesión exitoso
+          headers:
+            Authorization:
+              $ref: "#/components/headers/Authorization"
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Error inesperado
+  /permisos:
+    get:
+      tags:
+        - Permisos
+      description: Recupera todos los permisos asociados al JWT
+      operationId: getPermisosByJwt
+      summary: Recupera todos los permisos asociados al JWT
+      parameters:
+        - $ref: "#/components/parameters/AuthorizationHeader"
+      responses:
+        '200':
+          description: Lista de permisos asociados al JWT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPermisosByJwtResponse'
+          headers:
+            Authorization:
+              description: JWT validado
+              schema:
+                type: string
+                example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlc3RhZG8iOnRydWUsImRpc3BsYXlOYW1lIjoiTWFydGluIFZpbGxlZ2FzIiwiZXh0ZXJuYWxHdWlkIjoiQjdFRTUyMUItOTRFNC00QzVCLThBOEQtODE4Q0E2QkQ4REYwIiwiaWQiOjcyNCwidXNlck5hbWUiOiJtdmlsbGVnYXMiLCJkbmkiOiIyNzE2NzE4NSIsImZlY2hhQ2FtYmlvQ2xhdmUiOiIyMDE5LTEyLTEzIDE2OjQzOjQxLjAwMCIsInN1YiI6Im12aWxsZWdhcyIsImlhdCI6MTcxNDQ3ODYwMSwiZXhwIjoxNzE0NDgyMjAxfQ.3KfMDt6eR2_XiuNt_U_eXyED7VYeuAjy7BOH9Jy4qvQ
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error inesperado
+components:
+  headers:
+    Authorization:
+      description: Token de autenticación
+      schema:
+        example: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjo3MjQsInVzdWFyaW9fZGlzcGxheW5hbWUiOiJNYXJ0aW4gVmlsbGVnYXMiLCJ1c3VhcmlvX2RuaSI6IjI3MTY3MTg1IiwidXN1YXJpb0NpdWRhZF9wZXJzb25hX2ZpcnN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9sYXN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9jdWlsIjoiIiwidXN1YXJpb0NpdWRhZF9pZCI6IiIsInVzdWFyaW9fdXNlck5hbWUiOiJtdmlsbGVnYXMiLCJzdWIiOiJtdmlsbGVnYXMiLCJpYXQiOjE3MzU4NzIzNDQsImV4cCI6MTczNTg3Mjk0NH0.VLWrL6joN_NWezmXA1TfaSPIASy0r2Kz5B_khsPBi8w"
+        format: jwt
+        type: string
+  parameters:
+    AuthorizationHeader:
+      description: Token de autenticación
+      in: header
+      name: Authorization
+      required: true
+      schema:
+        example: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjo3MjQsInVzdWFyaW9fZGlzcGxheW5hbWUiOiJNYXJ0aW4gVmlsbGVnYXMiLCJ1c3VhcmlvX2RuaSI6IjI3MTY3MTg1IiwidXN1YXJpb0NpdWRhZF9wZXJzb25hX2ZpcnN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9sYXN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9jdWlsIjoiIiwidXN1YXJpb0NpdWRhZF9pZCI6IiIsInVzdWFyaW9fdXNlck5hbWUiOiJtdmlsbGVnYXMiLCJzdWIiOiJtdmlsbGVnYXMiLCJpYXQiOjE3MzU4NzIzNDQsImV4cCI6MTczNTg3Mjk0NH0.VLWrL6joN_NWezmXA1TfaSPIASy0r2Kz5B_khsPBi8w"
+        format: jwt
+        type: string
+  schemas:
+    Error:
+      properties:
+        detail:
+          description: Descripción del problema
+          example: No value present
+          type: string
+        instance:
+          description: El endpoint donde el problema ocurrió
+          example: "/generate"
+          type: string
+        status:
+          description: HTTP status code
+          example: 500
+          type: integer
+        title:
+          description: Nombre del problema
+          example: "NoSuchElementException"
+          type: string
+        timestamp:
+          description: Fecha en formato ISO 8601
+          example: "2024-01-04T15:30:00Z"
+          type: string
+        trace:
+          description: Identificador único opentelemetry TraceID
+          example: "0c6a41e22fe6478cc391908406ca9b8d"
+          type: string
+        type:
+          description: Documentación donde se explica claramente qué sucedió y por qué
+          example: "about:blank"
+          type: string
+      type: object
+    GetPermisosByJwtResponse:
+      properties:
+        permisos:
+          description: Permisos de administrador
+          items:
+            example: NIVEL_3_MENU_LATERAL
+            type: string
+          type: array
+        permisosCiudad:
+          description: Permisos de ciudadano
+          items:
+            example: LIBRETA_SANITARIA_VER_MI_LIBRETA
+            type: string
+          type: array
+      type: object
+    LoginRequest:
+      properties:
+        password:
+          description: Contraseña
+          example: XXX
+          type: string
+        username:
+          description: Nombre de usuario del administrador o CUIT del ciudadano.
+          example: 23215487369
+          type: string
+      required:
+        - password
+        - username
+      type: object

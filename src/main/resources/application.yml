@@ -1,3 +1,21 @@
+jpa:
+  properties:
+    hibernate:
+      ddl-auto: none
+      dialect: org.hibernate.dialect.SQLServerDialect
+      format_sql: true
+jwt:
+  key: ${JWT_KEY}
+  ttl: 43200 #seconds, 12 hours
 spring:
   application:
     name: munsl_backend
+  datasource:
+    driverClassName: net.sourceforge.jtds.jdbc.Driver
+    hikari:
+      connection-test-query: 'SELECT 1'
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+  hmac:
+    salt: ${HMAC_SALT}
