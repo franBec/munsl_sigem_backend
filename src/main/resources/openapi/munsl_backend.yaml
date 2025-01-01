@@ -1,0 +1,197 @@
+openapi: "3.0.2"
+info:
+  description: Interfaz API de la Municipalidad Ciudad de San Luis - Backend SIGEM y COMPRAS.
+  title: Municipalidad Ciudad de San Luis - Backend SIGEM y COMPRAS
+  version: "1.0"
+servers:
+  - url: http://localhost:8080
+paths:
+  /login:
+    post:
+      tags:
+        - Login
+      description: Permite la autenticación en la aplicación.
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      summary: Iniciar sesión.
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+          description: Inicio de sesión exitoso. Se responde body con información del Usuario mas un header authorization bearer.
+          headers:
+            Authorization:
+              description: Token de autenticación.
+              schema:
+                format: jwt
+                type: string
+                example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlc3RhZG8iOnRydWUsImRpc3BsYXlOYW1lIjoiTWFydGluIFZpbGxlZ2FzIiwiZXh0ZXJuYWxHdWlkIjoiQjdFRTUyMUItOTRFNC00QzVCLThBOEQtODE4Q0E2QkQ4REYwIiwiaWQiOjcyNCwidXNlck5hbWUiOiJtdmlsbGVnYXMiLCJkbmkiOiIyNzE2NzE4NSIsImZlY2hhQ2FtYmlvQ2xhdmUiOiIyMDE5LTEyLTEzIDE2OjQzOjQxLjAwMCIsInN1YiI6IjcyNCIsImlhdCI6MTcxNDQ5NTY0NCwiZXhwIjoxNzE0NDk5MjQ0fQ.Td9l7dgJ5U-zNiaTQEqIYTuMPAADKIKYJdoKYIrI6_c
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error inesperado.
+  /permiso:
+    get:
+      tags:
+        - Jwt
+      description: Recupera todos los permisos asociados al JWT.
+      operationId: getPermisosByJwt
+      summary: Recupera todos los permisos asociados al JWT.
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlc3RhZG8iOnRydWUsImRpc3BsYXlOYW1lIjoiTWFydGluIFZpbGxlZ2FzIiwiZXh0ZXJuYWxHdWlkIjoiQjdFRTUyMUItOTRFNC00QzVCLThBOEQtODE4Q0E2QkQ4REYwIiwiaWQiOjcyNCwidXNlck5hbWUiOiJtdmlsbGVnYXMiLCJkbmkiOiIyNzE2NzE4NSIsImZlY2hhQ2FtYmlvQ2xhdmUiOiIyMDE5LTEyLTEzIDE2OjQzOjQxLjAwMCIsInN1YiI6Im12aWxsZWdhcyIsImlhdCI6MTcxNDQ3ODYwMSwiZXhwIjoxNzE0NDgyMjAxfQ.3KfMDt6eR2_XiuNt_U_eXyED7VYeuAjy7BOH9Jy4qvQ
+      responses:
+        '200':
+          description: Lista de permisos asociados al JWT.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  example: NIVEL_3_MENU_LATERAL
+          headers:
+            Authorization:
+              description: JWT validado.
+              schema:
+                type: string
+                example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlc3RhZG8iOnRydWUsImRpc3BsYXlOYW1lIjoiTWFydGluIFZpbGxlZ2FzIiwiZXh0ZXJuYWxHdWlkIjoiQjdFRTUyMUItOTRFNC00QzVCLThBOEQtODE4Q0E2QkQ4REYwIiwiaWQiOjcyNCwidXNlck5hbWUiOiJtdmlsbGVnYXMiLCJkbmkiOiIyNzE2NzE4NSIsImZlY2hhQ2FtYmlvQ2xhdmUiOiIyMDE5LTEyLTEzIDE2OjQzOjQxLjAwMCIsInN1YiI6Im12aWxsZWdhcyIsImlhdCI6MTcxNDQ3ODYwMSwiZXhwIjoxNzE0NDgyMjAxfQ.3KfMDt6eR2_XiuNt_U_eXyED7VYeuAjy7BOH9Jy4qvQ
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error inesperado.
+  /jwt/validate:
+    get:
+      tags:
+        - Jwt
+      description: Úsese para extender el tiempo de vida de una sesión. Valida el JWT en el header Authorization pertenezca a un usuario con estado válido. Retorna un nuevo JWT con TTL actualizado en caso de que se encuentre próximo a vencer.
+      operationId: validateJwt
+      summary: Valida el JWT.
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlc3RhZG8iOnRydWUsImRpc3BsYXlOYW1lIjoiTWFydGluIFZpbGxlZ2FzIiwiZXh0ZXJuYWxHdWlkIjoiQjdFRTUyMUItOTRFNC00QzVCLThBOEQtODE4Q0E2QkQ4REYwIiwiaWQiOjcyNCwidXNlck5hbWUiOiJtdmlsbGVnYXMiLCJkbmkiOiIyNzE2NzE4NSIsImZlY2hhQ2FtYmlvQ2xhdmUiOiIyMDE5LTEyLTEzIDE2OjQzOjQxLjAwMCIsInN1YiI6Im12aWxsZWdhcyIsImlhdCI6MTcxNDQ3ODYwMSwiZXhwIjoxNzE0NDgyMjAxfQ.3KfMDt6eR2_XiuNt_U_eXyED7VYeuAjy7BOH9Jy4qvQ
+      responses:
+        '200':
+          description: JWT validado.
+          headers:
+            Authorization:
+              description: JWT validado.
+              schema:
+                type: string
+                example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlc3RhZG8iOnRydWUsImRpc3BsYXlOYW1lIjoiTWFydGluIFZpbGxlZ2FzIiwiZXh0ZXJuYWxHdWlkIjoiQjdFRTUyMUItOTRFNC00QzVCLThBOEQtODE4Q0E2QkQ4REYwIiwiaWQiOjcyNCwidXNlck5hbWUiOiJtdmlsbGVnYXMiLCJkbmkiOiIyNzE2NzE4NSIsImZlY2hhQ2FtYmlvQ2xhdmUiOiIyMDE5LTEyLTEzIDE2OjQzOjQxLjAwMCIsInN1YiI6Im12aWxsZWdhcyIsImlhdCI6MTcxNDQ3ODYwMSwiZXhwIjoxNzE0NDgyMjAxfQ.3KfMDt6eR2_XiuNt_U_eXyED7VYeuAjy7BOH9Jy4qvQ
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error inesperado.
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          description: Un breve mensaje de error o identificador.
+          type: string
+        message:
+          description: Un mensaje de error detallado.
+          type: string
+        path:
+          description: La ruta que resultó en el error.
+          type: string
+        timestamp:
+          description: La fecha y hora en que ocurrió el error, en formato ISO 8601.
+          example: 2024-01-04T15:30:00Z
+          type: string
+        trace:
+          description: opentelemetry TraceID, un identificador único.
+          example: 0c6a41e22fe6478cc391908406ca9b8d
+          type: string
+    LoginRequest:
+      type: object
+      required:
+        - password
+        - username
+      properties:
+        password:
+          description: contraseña
+          example: XXX
+          type: string
+        username:
+          description: Nombre de usuario.
+          example: mvillegas
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        id:
+          description: Identificador único del usuario.
+          example: 724
+          format: int64
+          type: integer
+        dni:
+          description: Documento Nacional de Identidad del usuario.
+          example: 27167185
+          type: string
+        userName:
+          description: Nombre de usuario para el inicio de sesión.
+          example: mvillegas
+          type: string
+        displayName:
+          description: Nombre visible del usuario, usado para su representación en la interfaz.
+          example: Martin Villegas
+          type: string
+        estado:
+          description: Estado actual del usuario, donde true significa activo y false inactivo.
+          example: true
+          type: boolean
+        externalGuid:
+          description: Identificador externo asociado con el usuario.
+          example: B7EE521B-94E4-4C5B-8A8D-818CA6BD8DF0
+          type: string
+        fechaCambioClave:
+          description: Fecha y hora del último cambio de contraseña, en formato yyyy-MM-dd HH:mm:ss.fff.
+          example: 2022-01-05 16:24:27.500
+          type: string
+        permisos:
+          type: array
+          items:
+            type: string
+        jwt:
+          type: string
+          description: authorization bearer jwt, same as the header authorization, for ease of use.
+    Permiso:
+      type: object
+      properties:
+        id:
+          description: Identificador único del permiso.
+          example: 159
+          format: int64
+          type: integer
+        name:
+          description: Nombre del permiso.
+          example: NIVEL_3_H_COMERCIAL_COMERCIO_RESOLVER
+          type: string
+        description:
+          description: Descripción del permiso.
+          example: Permite resolver las decisiones de inspecciónes realizadas, estadia COMERCIO.
+          type: string

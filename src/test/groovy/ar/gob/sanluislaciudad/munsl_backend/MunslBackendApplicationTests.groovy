@@ -9,5 +9,4 @@ class MunslBackendApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

@@ -9,5 +9,4 @@ class MunslBackendApplication {
 	static void main(String[] args) {
 		SpringApplication.run(MunslBackendApplication, args)
 	}
-
 }
