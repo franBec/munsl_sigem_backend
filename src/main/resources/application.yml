@@ -9,7 +9,7 @@ jwt:
   ttl: 43200 #seconds, 12 hours
 spring:
   application:
-    name: munsl_backend
+    name: munsl_sigem_backend
   datasource:
     driverClassName: net.sourceforge.jtds.jdbc.Driver
     hikari:
