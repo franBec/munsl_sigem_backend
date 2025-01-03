@@ -46,7 +46,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetPermisosByJwtResponse'
+                description: Permisos de administrador
+                items:
+                  example: NIVEL_3_MENU_LATERAL
+                  type: string
+                type: array
           headers:
             Authorization:
               description: JWT validado
@@ -108,21 +112,6 @@ components:
           description: Documentación donde se explica claramente qué sucedió y por qué
           example: "about:blank"
           type: string
-      type: object
-    GetPermisosByJwtResponse:
-      properties:
-        permisos:
-          description: Permisos de administrador
-          items:
-            example: NIVEL_3_MENU_LATERAL
-            type: string
-          type: array
-        permisosCiudad:
-          description: Permisos de ciudadano
-          items:
-            example: LIBRETA_SANITARIA_VER_MI_LIBRETA
-            type: string
-          type: array
       type: object
     LoginRequest:
       properties:
