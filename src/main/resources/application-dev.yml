@@ -18,4 +18,4 @@ spring:
     defer-datasource-initialization: true
 jwt:
   key: ${JWT_KEY}
-  ttl: 600 #seconds, 10min
+  ttl: 43200 #seconds, 12 hours
