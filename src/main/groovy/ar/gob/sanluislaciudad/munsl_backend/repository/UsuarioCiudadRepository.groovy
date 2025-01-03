@@ -6,6 +6,13 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 
 interface UsuarioCiudadRepository extends JpaRepository<UsuarioCiudad, Long>{
-	@Query("SELECT u FROM UsuarioCiudad u JOIN u.persona p WHERE p.cuil = :cuil")
-	Set<UsuarioCiudad> findByPersonaCuil(@Param("cuil") Long cuil)
+	@Query("""
+    SELECT DISTINCT u
+    FROM UsuarioCiudad u
+    JOIN FETCH u.persona p
+    LEFT JOIN FETCH u.rolesCiudad rc
+    LEFT JOIN FETCH rc.permisosCiudad
+    WHERE p.cuil = :cuil
+""")
+	Set<UsuarioCiudad> findByPersonaCuilWithRolesAndPermissions(@Param("cuil") Long cuil)
 }

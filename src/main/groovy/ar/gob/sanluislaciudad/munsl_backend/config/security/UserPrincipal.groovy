@@ -3,6 +3,7 @@ package ar.gob.sanluislaciudad.munsl_backend.config.security
 import ar.gob.sanluislaciudad.munsl_backend.entity.Usuario
 import ar.gob.sanluislaciudad.munsl_backend.entity.UsuarioCiudad
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class UserPrincipal implements UserDetails{
@@ -17,7 +18,25 @@ class UserPrincipal implements UserDetails{
 
 	@Override
 	Collection<? extends GrantedAuthority> getAuthorities() {
-		return null
+		List<GrantedAuthority> authorities = []
+
+		if (usuario) {
+			authorities.addAll(usuario.roles.collectMany {
+				it.permisos.collect {
+					new SimpleGrantedAuthority(it.name)
+				}
+			})
+		}
+
+		if (usuarioCiudad) {
+			authorities.addAll(usuarioCiudad.rolesCiudad.collectMany {
+				it.permisosCiudad.collect {
+					new SimpleGrantedAuthority(it.name)
+				}
+			})
+		}
+
+		return authorities
 	}
 
 	@Override

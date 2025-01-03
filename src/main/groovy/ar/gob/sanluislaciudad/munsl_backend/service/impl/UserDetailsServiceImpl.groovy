@@ -38,7 +38,7 @@ class UserDetailsServiceImpl implements UserDetailsService{
 
 	private Usuario loadUsuario(String username){
 		usuarioRepository
-				.findByUserName(username)
+				.findByUsernameWithRolesAndPermissions(username)
 				.orElseThrow({
 					->
 					throw new UsernameNotFoundException("Usuario username $username not found")
@@ -47,7 +47,7 @@ class UserDetailsServiceImpl implements UserDetailsService{
 
 	private UsuarioCiudad loadUsuarioCiudad(Long cuil){
 		Set<UsuarioCiudad> usuarios = usuarioCiudadRepository
-				.findByPersonaCuil(cuil)
+				.findByPersonaCuilWithRolesAndPermissions(cuil)
 
 		if(usuarios.empty){
 			throw new UsernameNotFoundException("UsuarioCiudad cuil $cuil not found")

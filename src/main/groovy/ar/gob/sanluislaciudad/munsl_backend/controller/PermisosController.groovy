@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class PermisosController implements PermisosApi{
-    @Override
-    ResponseEntity<GetPermisosByJwtResponse> getPermisosByJwt(String authorization) {
-        return super.getPermisosByJwt(authorization)
-    }
+	@Override
+	ResponseEntity<GetPermisosByJwtResponse> getPermisosByJwt(String authorization) {
+		return super.getPermisosByJwt(authorization)
+	}
 }
