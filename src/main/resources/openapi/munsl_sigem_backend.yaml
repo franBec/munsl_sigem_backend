@@ -1,6 +1,7 @@
 openapi: "3.0.2"
 info:
-  description: Interfaz API de la Municipalidad Ciudad de San Luis - SIGEM Backend
+  description:
+    Interfaz API de la Municipalidad Ciudad de San Luis - SIGEM Backend
   title: Municipalidad Ciudad de San Luis - SIGEM Backend
   version: "1.0"
 servers:
@@ -17,14 +18,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginRequest'
+              $ref: "#/components/schemas/LoginRequest"
       summary: Iniciar sesión
       responses:
-        '200':
-          description: Inicio de sesión exitoso
+        "200":
+          description:
+            Inicio de sesión exitoso. Header con JWT y body con lista de
+            permisos asociados al JWT
+          content:
+            application/json:
+              schema:
+                description: Permisos de administrador
+                items:
+                  example: NIVEL_3_MENU_LATERAL
+                  type: string
+                type: array
           headers:
             Authorization:
               $ref: "#/components/headers/Authorization"
+        "401":
+          description: Inicio de sesión fallido. No body ni headers
         default:
           content:
             application/json:
@@ -41,7 +54,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/AuthorizationHeader"
       responses:
-        '200':
+        "200":
           description: Lista de permisos asociados al JWT
           content:
             application/json:
@@ -56,19 +69,23 @@ paths:
               description: JWT validado
               schema:
                 type: string
-                example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlc3RhZG8iOnRydWUsImRpc3BsYXlOYW1lIjoiTWFydGluIFZpbGxlZ2FzIiwiZXh0ZXJuYWxHdWlkIjoiQjdFRTUyMUItOTRFNC00QzVCLThBOEQtODE4Q0E2QkQ4REYwIiwiaWQiOjcyNCwidXNlck5hbWUiOiJtdmlsbGVnYXMiLCJkbmkiOiIyNzE2NzE4NSIsImZlY2hhQ2FtYmlvQ2xhdmUiOiIyMDE5LTEyLTEzIDE2OjQzOjQxLjAwMCIsInN1YiI6Im12aWxsZWdhcyIsImlhdCI6MTcxNDQ3ODYwMSwiZXhwIjoxNzE0NDgyMjAxfQ.3KfMDt6eR2_XiuNt_U_eXyED7VYeuAjy7BOH9Jy4qvQ
+                example:
+                  Bearer
+                  eyJhbGciOiJIUzI1NiJ9.eyJlc3RhZG8iOnRydWUsImRpc3BsYXlOYW1lIjoiTWFydGluIFZpbGxlZ2FzIiwiZXh0ZXJuYWxHdWlkIjoiQjdFRTUyMUItOTRFNC00QzVCLThBOEQtODE4Q0E2QkQ4REYwIiwiaWQiOjcyNCwidXNlck5hbWUiOiJtdmlsbGVnYXMiLCJkbmkiOiIyNzE2NzE4NSIsImZlY2hhQ2FtYmlvQ2xhdmUiOiIyMDE5LTEyLTEzIDE2OjQzOjQxLjAwMCIsInN1YiI6Im12aWxsZWdhcyIsImlhdCI6MTcxNDQ3ODYwMSwiZXhwIjoxNzE0NDgyMjAxfQ.3KfMDt6eR2_XiuNt_U_eXyED7VYeuAjy7BOH9Jy4qvQ
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
           description: Error inesperado
 components:
   headers:
     Authorization:
       description: Token de autenticación
       schema:
-        example: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjo3MjQsInVzdWFyaW9fZGlzcGxheW5hbWUiOiJNYXJ0aW4gVmlsbGVnYXMiLCJ1c3VhcmlvX2RuaSI6IjI3MTY3MTg1IiwidXN1YXJpb0NpdWRhZF9wZXJzb25hX2ZpcnN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9sYXN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9jdWlsIjoiIiwidXN1YXJpb0NpdWRhZF9pZCI6IiIsInVzdWFyaW9fdXNlck5hbWUiOiJtdmlsbGVnYXMiLCJzdWIiOiJtdmlsbGVnYXMiLCJpYXQiOjE3MzU4NzIzNDQsImV4cCI6MTczNTg3Mjk0NH0.VLWrL6joN_NWezmXA1TfaSPIASy0r2Kz5B_khsPBi8w"
+        example:
+          "Bearer
+          eyJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjo3MjQsInVzdWFyaW9fZGlzcGxheW5hbWUiOiJNYXJ0aW4gVmlsbGVnYXMiLCJ1c3VhcmlvX2RuaSI6IjI3MTY3MTg1IiwidXN1YXJpb0NpdWRhZF9wZXJzb25hX2ZpcnN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9sYXN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9jdWlsIjoiIiwidXN1YXJpb0NpdWRhZF9pZCI6IiIsInVzdWFyaW9fdXNlck5hbWUiOiJtdmlsbGVnYXMiLCJzdWIiOiJtdmlsbGVnYXMiLCJpYXQiOjE3MzU4NzIzNDQsImV4cCI6MTczNTg3Mjk0NH0.VLWrL6joN_NWezmXA1TfaSPIASy0r2Kz5B_khsPBi8w"
         format: jwt
         type: string
   parameters:
@@ -78,7 +95,9 @@ components:
       name: Authorization
       required: true
       schema:
-        example: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjo3MjQsInVzdWFyaW9fZGlzcGxheW5hbWUiOiJNYXJ0aW4gVmlsbGVnYXMiLCJ1c3VhcmlvX2RuaSI6IjI3MTY3MTg1IiwidXN1YXJpb0NpdWRhZF9wZXJzb25hX2ZpcnN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9sYXN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9jdWlsIjoiIiwidXN1YXJpb0NpdWRhZF9pZCI6IiIsInVzdWFyaW9fdXNlck5hbWUiOiJtdmlsbGVnYXMiLCJzdWIiOiJtdmlsbGVnYXMiLCJpYXQiOjE3MzU4NzIzNDQsImV4cCI6MTczNTg3Mjk0NH0.VLWrL6joN_NWezmXA1TfaSPIASy0r2Kz5B_khsPBi8w"
+        example:
+          "Bearer
+          eyJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjo3MjQsInVzdWFyaW9fZGlzcGxheW5hbWUiOiJNYXJ0aW4gVmlsbGVnYXMiLCJ1c3VhcmlvX2RuaSI6IjI3MTY3MTg1IiwidXN1YXJpb0NpdWRhZF9wZXJzb25hX2ZpcnN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9sYXN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9jdWlsIjoiIiwidXN1YXJpb0NpdWRhZF9pZCI6IiIsInVzdWFyaW9fdXNlck5hbWUiOiJtdmlsbGVnYXMiLCJzdWIiOiJtdmlsbGVnYXMiLCJpYXQiOjE3MzU4NzIzNDQsImV4cCI6MTczNTg3Mjk0NH0.VLWrL6joN_NWezmXA1TfaSPIASy0r2Kz5B_khsPBi8w"
         format: jwt
         type: string
   schemas:
@@ -109,7 +128,8 @@ components:
           example: "0c6a41e22fe6478cc391908406ca9b8d"
           type: string
         type:
-          description: Documentación donde se explica claramente qué sucedió y por qué
+          description:
+            Documentación donde se explica claramente qué sucedió y por qué
           example: "about:blank"
           type: string
       type: object

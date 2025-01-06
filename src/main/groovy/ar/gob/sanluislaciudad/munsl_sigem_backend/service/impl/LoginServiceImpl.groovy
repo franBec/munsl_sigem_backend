@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
+import org.springframework.security.core.GrantedAuthority
 import org.springframework.stereotype.Service
 
 @Service
@@ -23,7 +24,7 @@ class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	String login(LoginRequest loginRequest) {
+	Map<String, Object> login(LoginRequest loginRequest) {
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 				loginRequest.getUsername(),
 				loginRequest.getPassword()
@@ -34,17 +35,19 @@ class LoginServiceImpl implements LoginService {
 
 		Usuario usuario = authentication.principal["usuario"] as Usuario
 		UsuarioCiudad usuarioCiudad = authentication.principal["usuarioCiudad"] as UsuarioCiudad
-		jwtService.generateToken(
+
+		Map.of(
+				"body", authentication.principal["authorities"].stream().map{ GrantedAuthority it -> it.authority }.toList(),
+				"heeader", jwtService.generateToken(
 				usuario ? usuario.userName : usuarioCiudad.persona.cuil as String,
 				Map.of(
-				"usuario_id",usuario?.id ?: "",
 				"usuario_dni",usuario?.dni ?: "",
 				"usuario_userName",usuario?.userName ?: "",
 				"usuario_displayname",usuario?.displayName ?: "",
-				"usuarioCiudad_id",usuarioCiudad?.id ?: "",
 				"usuarioCiudad_persona_firstName",usuarioCiudad?.persona?.firstName ?: "",
 				"usuarioCiudad_persona_lastName",usuarioCiudad?.persona?.lastName ?: "",
 				"usuarioCiudad_persona_cuil",usuarioCiudad?.persona?.cuil ?: ""
+				)
 				)
 				)
 	}

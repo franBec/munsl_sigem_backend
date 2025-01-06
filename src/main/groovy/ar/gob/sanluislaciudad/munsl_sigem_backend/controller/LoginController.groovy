@@ -18,9 +18,11 @@ class LoginController implements LoginApi{
 	}
 
 	@Override
-	ResponseEntity<Void> login(LoginRequest loginRequest) {
+	ResponseEntity<List<String>> login(LoginRequest loginRequest) {
+		Map<String, Object> loginResponseMap = loginService.login(loginRequest)
+
 		HttpHeaders headers = new HttpHeaders()
-		headers.add("Authorization", "Bearer " + loginService.login(loginRequest))
-		new ResponseEntity<>(headers, HttpStatus.OK)
+		headers.add("Authorization", "Bearer " + loginResponseMap["header"])
+		new ResponseEntity<>(loginResponseMap["body"] as List<String>,headers, HttpStatus.OK)
 	}
 }
