@@ -1,4 +1,4 @@
-package ar.gob.sanluislaciudad.munsl_sigem_backend.config.security
+package ar.gob.sanluislaciudad.munsl_sigem_backend.security
 
 import ar.gob.sanluislaciudad.munsl_sigem_backend.entity.Usuario
 import ar.gob.sanluislaciudad.munsl_sigem_backend.entity.UsuarioCiudad

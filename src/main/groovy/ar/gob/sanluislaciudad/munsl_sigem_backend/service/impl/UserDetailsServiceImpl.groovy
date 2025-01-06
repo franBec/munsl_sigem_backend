@@ -1,10 +1,10 @@
 package ar.gob.sanluislaciudad.munsl_sigem_backend.service.impl
 
-import ar.gob.sanluislaciudad.munsl_sigem_backend.config.security.UserPrincipal
 import ar.gob.sanluislaciudad.munsl_sigem_backend.entity.Usuario
 import ar.gob.sanluislaciudad.munsl_sigem_backend.entity.UsuarioCiudad
 import ar.gob.sanluislaciudad.munsl_sigem_backend.repository.UsuarioCiudadRepository
 import ar.gob.sanluislaciudad.munsl_sigem_backend.repository.UsuarioRepository
+import ar.gob.sanluislaciudad.munsl_sigem_backend.security.UserPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException

@@ -1,8 +1,9 @@
-package ar.gob.sanluislaciudad.munsl_sigem_backend.config.security
+package ar.gob.sanluislaciudad.munsl_sigem_backend.config
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console
 
 import ar.gob.sanluislaciudad.munsl_sigem_backend.filter.JwtFilter
+import ar.gob.sanluislaciudad.munsl_sigem_backend.security.HmacPasswordEncoder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -43,6 +44,7 @@ class SecurityConfig {
 				.authorizeHttpRequests {
 					it
 							.requestMatchers(toH2Console()).permitAll()
+							.requestMatchers("/actuator/**").permitAll()
 							.requestMatchers(HttpMethod.POST, "/login").permitAll()
 							.anyRequest().authenticated()
 				}
