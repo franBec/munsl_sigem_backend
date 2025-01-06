@@ -138,10 +138,14 @@ components:
         password:
           description: Contraseña
           example: XXX
+          maxLength: 128
+          minLength: 3
           type: string
         username:
           description: Nombre de usuario del administrador o CUIT del ciudadano.
           example: 23215487369
+          maxLength: 32
+          minLength: 4
           type: string
       required:
         - password
