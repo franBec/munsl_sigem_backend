@@ -11,7 +11,7 @@ El objetivo principal de este proyecto es crear una representación fiel del fun
 1. **Migración de la lógica de negocio**:
     - De Java 8 a Java 21.
     - Abandonar el monolito basado en [Grails](https://grails.org/).
-    - Adoptar una arquitectura separada de frontend y backend.
+    - Adoptar una arquitectura separada de frontend (Next.js 14) y backend (Groovy Spring Boot 3).
 
 2. **Prioridad en la representación actual**:
     - Dado el alcance y la complejidad de esta transición, el objetivo inicial es replicar el comportamiento actual de manera fiel.
@@ -31,47 +31,14 @@ Aún no se ha definido una licencia pública para este proyecto. Si el código p
 ## Documentación API
 La documentación de OpenAPI se puede encontrar en el archivo [munsl_sigem_backend.yaml](https://github.com/franBec/munsl_sigem_backend/blob/main/src/main/resources/openapi/munsl_sigem_backend.yaml).
 
-## Levantar el proyecto en local
+## Live demo
 
-### Requisitos previos
-- Para ejecutar con Gradle:
-    - **Java 21**
-    - **Gradle**
-- Para implementación en contenedores:
-    - **Docker**
+`https://munsl-sigem-backend.onrender.com`
 
-### Ejecutar con  Gradle
-1. Clonar el repositorio:
-    ```bash
-    git clone https://github.com/franBec/munsl_sigem_backend
-    ```
-2. Navegar al directorio del proyecto:
-    ```bash
-    cd munsl_sigem_backend
-    ```
-3. Construir y ejecutar la applicación usando Gradle:
-    ```bash
-    ./gradlew bootRun
-    ```
+Esta hosteado en una instancia gratuita de [render](https://dashboard.render.com/).
+- Las instancias gratuitas dejan de funcionar por inactividad, lo que puede retrasar la primera solicitud después de mucho tiempo por algunos minutos.
 
-### Ejecutar con Docker
-1. Clonar el repositorio:
-    ```bash
-    git clone https://github.com/franBec/munsl_sigem_backend
-    ```
-2. Navegar al directorio del proyecto:
-    ```bash
-    cd munsl_sigem_backend
-    ```
-3. Construir la imagen Docker:
-    ```bash
-    docker build -t munsl_sigem_backend .
-    ```
-4. Ejecuar el contenedor Docker:
-     ```bash
-     docker run -p 8080:8080 munsl_sigem_backend
-     ```
-## Author
+## Autor
 Franco Exequiel Becvort <🐤/>
 - [Linkedin](https://www.linkedin.com/in/franco-becvort/)
 - [Website](https://pollito.dev/)
