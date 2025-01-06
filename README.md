@@ -1,7 +1,6 @@
 # munsl_sigem_backend
 
 ![escudo municipal](/assets/escudo-municipal-blanco-2x.png)
-![sigem](/assets/sigem-blanco.png)
 
 Este proyecto es un **MVP (Producto Mínimo Viable)** de una posible reescritura del backend del sistema [SIGEM](https://sigem.sanluislaciudad.gob.ar/).
 
@@ -36,10 +35,10 @@ La documentación de OpenAPI se puede encontrar en el archivo [munsl_sigem_backe
 
 ### Requisitos previos
 - Para ejecutar con Gradle:
-- **Java 21**
-- **Gradle**
+    - **Java 21**
+    - **Gradle**
 - Para implementación en contenedores:
-- **Docker**
+    - **Docker**
 
 ### Ejecutar con  Gradle
 1. Clonar el repositorio:
