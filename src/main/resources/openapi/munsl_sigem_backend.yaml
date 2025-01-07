@@ -7,10 +7,10 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
-  /login:
+  /auth/login:
     post:
       tags:
-        - Login
+        - Auth
       description: Permite la autenticación en la aplicación
       operationId: login
       requestBody:
@@ -44,10 +44,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
           description: Error inesperado
-  /permisos:
+  /auth/permisos:
     get:
       tags:
-        - Permisos
+        - Auth
       description: Recupera todos los permisos asociados al JWT
       operationId: getPermisosByJwt
       summary: Recupera todos los permisos asociados al JWT

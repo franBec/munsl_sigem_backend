@@ -45,7 +45,7 @@ class SecurityConfig {
 					it
 							.requestMatchers(toH2Console()).permitAll()
 							.requestMatchers("/actuator/**").permitAll()
-							.requestMatchers(HttpMethod.POST, "/login").permitAll()
+							.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 							.anyRequest().authenticated()
 				}
 				.headers{ it.frameOptions{it.disable()}}
