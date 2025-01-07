@@ -72,6 +72,10 @@ Actualmente, solo existen dos usuarios con los cuales se puede hacer login
 | 23215487369 | XXX        | Ciudadano   |
 | mvillegas   | XXX        | Admin       |
 
+## Próximos pasos (TODO)
+
+- Test unitarios
+
 ## Autor
 
 Franco Exequiel Becvort <🐤/>
