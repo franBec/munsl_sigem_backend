@@ -38,7 +38,7 @@ class LoginServiceImpl implements LoginService {
 
 		Map.of(
 				"body", authentication.principal["authorities"].stream().map{ GrantedAuthority it -> it.authority }.toList(),
-				"heeader", jwtService.generateToken(
+				"header", jwtService.generateToken(
 				usuario ? usuario.userName : usuarioCiudad.persona.cuil as String,
 				Map.of(
 				"usuario_dni",usuario?.dni ?: "",
