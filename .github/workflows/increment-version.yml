@@ -3,7 +3,7 @@ name: Increment Version and Tag
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   tag-version:
