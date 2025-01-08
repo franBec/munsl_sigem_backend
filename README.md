@@ -22,7 +22,7 @@ Aún no se ha definido una licencia pública para este proyecto. Si el código p
 
 ## Documentación API
 
-La documentación de OpenAPI se puede encontrar en el archivo [munsl_sigem_backend.yaml](https://github.com/franBec/munsl_sigem_backend/blob/main/src/main/resources/openapi/munsl_sigem_backend.yaml).
+La documentación de OpenAPI se puede encontrar en el archivo [munsl_sigem_backend.yaml](https://github.com/franBec/munsl_sigem_backend/blob/develop/src/main/resources/openapi/munsl_sigem_backend.yaml).
 
 ## Respecto a SPRING_PROFILES_ACTIVE
 

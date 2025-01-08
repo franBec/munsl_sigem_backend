@@ -10,6 +10,9 @@ jwt:
 management:
   endpoints:
     web:
+      cors:
+        allowed-methods: GET
+        allowed-origins: http://localhost:3000
       exposure:
         include: info
   info:
