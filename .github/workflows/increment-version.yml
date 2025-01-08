@@ -28,13 +28,16 @@ jobs:
       - name: Increment version
         id: increment_version
         run: |
-          if [ -z "${{ env.latest_tag }}" ]; then
+          if [ -z "$LATEST_TAG" ]; then
             echo "new_version=v0.1.0" >> $GITHUB_ENV
           else
-            IFS='.' read -r major minor patch <<< "${{ env.latest_tag#v }}"
+            LATEST_TAG="${LATEST_TAG#v}" # Remove 'v' prefix
+            IFS='.' read -r major minor patch <<< "$LATEST_TAG"
             patch=$((patch+1))
             echo "new_version=v$major.$minor.$patch" >> $GITHUB_ENV
           fi
+        env:
+          LATEST_TAG: ${{ env.latest_tag }}
 
       - name: Create new tag
         run: |
