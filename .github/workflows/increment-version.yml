@@ -22,20 +22,16 @@ jobs:
         id: get_tag
         run: |
           git fetch --tags
-          latest=$(git describe --tags `git rev-list --tags --max-count=1`)
+          latest=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null || echo "v0.0.0")
           echo "latest_tag=$latest" >> $GITHUB_ENV
 
       - name: Increment version
         id: increment_version
         run: |
-          if [ -z "$LATEST_TAG" ]; then
-            echo "new_version=v0.1.0" >> $GITHUB_ENV
-          else
-            LATEST_TAG="${LATEST_TAG#v}" # Remove 'v' prefix
-            IFS='.' read -r major minor patch <<< "$LATEST_TAG"
-            patch=$((patch+1))
-            echo "new_version=v$major.$minor.$patch" >> $GITHUB_ENV
-          fi
+          LATEST_TAG="${LATEST_TAG#v}" # Remove 'v' prefix
+          IFS='.' read -r major minor patch <<< "$LATEST_TAG"
+          patch=$((patch+1))
+          echo "new_version=v$major.$minor.$patch" >> $GITHUB_ENV
         env:
           LATEST_TAG: ${{ env.latest_tag }}
 
