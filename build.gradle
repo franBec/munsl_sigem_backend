@@ -59,6 +59,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
+springBoot {
+	buildInfo()
+}
+
 tasks.named("build") {
 	dependsOn 'spotlessGroovyApply'
 	dependsOn 'spotlessGroovyGradleApply'

@@ -7,6 +7,19 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
+  /actuator/info:
+    get:
+      tags:
+        - Info
+      description: Información de compilación de la aplicación
+      summary: Obtiene información de compilación de la aplicación
+      responses:
+        "200":
+          description: Respuesta exitosa con información de compilación de la aplicación
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Build"
   /auth/login:
     post:
       tags:
@@ -64,14 +77,6 @@ paths:
                   example: NIVEL_3_MENU_LATERAL
                   type: string
                 type: array
-          headers:
-            Authorization:
-              description: JWT validado
-              schema:
-                type: string
-                example:
-                  Bearer
-                  eyJhbGciOiJIUzI1NiJ9.eyJlc3RhZG8iOnRydWUsImRpc3BsYXlOYW1lIjoiTWFydGluIFZpbGxlZ2FzIiwiZXh0ZXJuYWxHdWlkIjoiQjdFRTUyMUItOTRFNC00QzVCLThBOEQtODE4Q0E2QkQ4REYwIiwiaWQiOjcyNCwidXNlck5hbWUiOiJtdmlsbGVnYXMiLCJkbmkiOiIyNzE2NzE4NSIsImZlY2hhQ2FtYmlvQ2xhdmUiOiIyMDE5LTEyLTEzIDE2OjQzOjQxLjAwMCIsInN1YiI6Im12aWxsZWdhcyIsImlhdCI6MTcxNDQ3ODYwMSwiZXhwIjoxNzE0NDgyMjAxfQ.3KfMDt6eR2_XiuNt_U_eXyED7VYeuAjy7BOH9Jy4qvQ
         default:
           content:
             application/json:
@@ -101,6 +106,29 @@ components:
         format: jwt
         type: string
   schemas:
+    Build:
+      properties:
+        artifact:
+          description: Nombre del artefacto
+          example: "munsl_sigem_backend"
+          type: string
+        group:
+          description: Grupo de organización de la aplicación
+          example: "ar.gob.sanluislaciudad"
+          type: string
+        name:
+          description: Nombre de la aplicación
+          example: "munsl_sigem_backend"
+          type: string
+        time:
+          description: Fecha de la compilación en formato ISO 8601
+          example: "2024-01-04T15:30:00Z"
+          type: string
+        version:
+          description: Versión de la aplicación
+          example: "0.0.1-SNAPSHOT"
+          type: string
+      type: object
     Error:
       properties:
         detail:
@@ -137,13 +165,13 @@ components:
       properties:
         password:
           description: Contraseña
-          example: XXX
+          example: "XXX"
           maxLength: 128
           minLength: 3
           type: string
         username:
-          description: Nombre de usuario del administrador o CUIT del ciudadano.
-          example: 23215487369
+          description: Nombre de usuario del administrador o CUIT del ciudadano
+          example: "23215487369"
           maxLength: 32
           minLength: 4
           type: string

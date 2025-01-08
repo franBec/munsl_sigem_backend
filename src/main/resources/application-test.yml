@@ -3,9 +3,17 @@ cors:
   allowed-methods: GET, POST, PUT, DELETE, PATCH
   allowed-headers: "*"
   allow-credentials: true
-logging:
-  level:
-    org.hibernate.SQL: DEBUG
+jwt:
+  key: ${JWT_KEY}
+  ttl: 43200 #seconds, 12 hours
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info
+  info:
+    build:
+      enabled: true
 spring:
   application:
     name: munsl_sigem_backend
@@ -21,6 +29,3 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
-jwt:
-  key: ${JWT_KEY}
-  ttl: 43200 #seconds, 12 hours

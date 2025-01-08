@@ -7,6 +7,14 @@ jpa:
 jwt:
   key: ${JWT_KEY}
   ttl: 43200 #seconds, 12 hours
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info
+  info:
+    build:
+      enabled: true
 spring:
   application:
     name: munsl_sigem_backend
