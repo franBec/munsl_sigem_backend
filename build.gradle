@@ -30,7 +30,7 @@ static def getVersionFromGit() {
 		def patch = versionParts[2].toInteger() + 1
 		return "${major}.${minor}.${patch}"
 	} else {
-		return "0.1.0"
+		return "0.0.1"
 	}
 }
 version = getVersionFromGit()
