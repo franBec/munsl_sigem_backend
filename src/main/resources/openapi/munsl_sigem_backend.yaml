@@ -15,7 +15,8 @@ paths:
       summary: Obtiene información de compilación de la aplicación
       responses:
         "200":
-          description: Respuesta exitosa con información de compilación de la aplicación
+          description:
+            Respuesta exitosa con información de compilación de la aplicación
           content:
             application/json:
               schema:
@@ -147,7 +148,7 @@ components:
       type: object
     ErrorBadCredentials:
       allOf:
-        - $ref: '#/components/schemas/Error'
+        - $ref: "#/components/schemas/Error"
         - type: object
           properties:
             detail:
@@ -160,7 +161,7 @@ components:
               example: "BadCredentialsException"
     ErrorMethodArgumentNotValidException:
       allOf:
-        - $ref: '#/components/schemas/Error'
+        - $ref: "#/components/schemas/Error"
         - type: object
           properties:
             detail:
