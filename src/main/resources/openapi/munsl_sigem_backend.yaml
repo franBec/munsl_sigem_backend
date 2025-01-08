@@ -67,32 +67,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
           description: Error inesperado
-  /auth/permisos:
-    get:
-      tags:
-        - Auth
-      description: Recupera todos los permisos asociados al JWT
-      operationId: getPermisosByJwt
-      summary: Recupera todos los permisos asociados al JWT
-      parameters:
-        - $ref: "#/components/parameters/AuthorizationHeader"
-      responses:
-        "200":
-          description: Lista de permisos asociados al JWT
-          content:
-            application/json:
-              schema:
-                description: Permisos de administrador
-                items:
-                  example: NIVEL_3_MENU_LATERAL
-                  type: string
-                type: array
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-          description: Error inesperado
 components:
   headers:
     Authorization:
