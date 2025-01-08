@@ -15,25 +15,7 @@ sourceSets {
 }
 
 group = 'ar.gob.sanluislaciudad'
-
-static def getVersionFromGit() {
-	def tag
-	try {
-		tag = 'git describe --tags --abbrev=0'.execute().text.trim()
-	} catch (Exception ignored) {
-		tag = "v0.0.0"
-	}
-	def versionParts = tag.replaceAll("v", "").split("\\.")
-	if (versionParts.size() == 3) {
-		def major = versionParts[0].toInteger()
-		def minor = versionParts[1].toInteger()
-		def patch = versionParts[2].toInteger() + 1
-		return "${major}.${minor}.${patch}"
-	} else {
-		return "0.0.1"
-	}
-}
-version = getVersionFromGit()
+version = '0.0.2'
 
 java {
 	toolchain {
