@@ -1,12 +1,13 @@
-name: Increment Version and Tag
+name: Increment Version
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types:
+      - closed
 
 jobs:
-  tag-version:
+  increment-version:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -25,20 +26,38 @@ jobs:
           latest=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null || echo "v0.0.0")
           echo "latest_tag=$latest" >> $GITHUB_ENV
 
-      - name: Increment version
-        id: increment_version
+      - name: Determine version increment
+        id: determine_increment
         run: |
+          LATEST_TAG="${{ env.latest_tag }}"
           LATEST_TAG="${LATEST_TAG#v}" # Remove 'v' prefix
           IFS='.' read -r major minor patch <<< "$LATEST_TAG"
-          patch=$((patch+1))
-          echo "new_version=v$major.$minor.$patch" >> $GITHUB_ENV
-        env:
-          LATEST_TAG: ${{ env.latest_tag }}
 
-      - name: Create new tag
+          if [[ "${{ github.event.pull_request.head.ref }}" == feature/* ]]; then
+            minor=$((minor + 1))
+            patch=0
+          elif [[ "${{ github.event.pull_request.head.ref }}" == hotfix/* ]]; then
+            patch=$((patch + 1))
+          elif [[ "${{ github.event.pull_request.head.ref }}" == release/* ]]; then
+            major=$((major + 1))
+            minor=0
+            patch=0
+          fi
+
+          echo "new_version=v$major.$minor.$patch" >> $GITHUB_ENV
+
+      - name: Create and push new tag
         run: |
           git tag ${{ env.new_version }}
           git push origin ${{ env.new_version }}
+
+      - name: Update build.gradle version
+        run: |
+          git checkout ${{ github.event.pull_request.base.ref }}
+          sed -i "s/version = '.*'/version = '${{ env.new_version }}'/" build.gradle
+          git add build.gradle
+          git commit -m "Update version in build.gradle to ${{ env.new_version }}"
+          git push origin ${{ github.event.pull_request.base.ref }}
 
       - name: Output new version
         run: echo "New version is ${{ env.new_version }}"
