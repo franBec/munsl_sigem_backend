@@ -49,8 +49,18 @@ paths:
           headers:
             Authorization:
               $ref: "#/components/headers/Authorization"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMethodArgumentNotValidException"
+          description: Argumentos no válidos
         "401":
-          description: Inicio de sesión fallido. No body ni headers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBadCredentials"
+          description: Inicio de sesión fallido
         default:
           content:
             application/json:
@@ -90,7 +100,7 @@ components:
       schema:
         example:
           "Bearer
-          eyJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjo3MjQsInVzdWFyaW9fZGlzcGxheW5hbWUiOiJNYXJ0aW4gVmlsbGVnYXMiLCJ1c3VhcmlvX2RuaSI6IjI3MTY3MTg1IiwidXN1YXJpb0NpdWRhZF9wZXJzb25hX2ZpcnN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9sYXN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9jdWlsIjoiIiwidXN1YXJpb0NpdWRhZF9pZCI6IiIsInVzdWFyaW9fdXNlck5hbWUiOiJtdmlsbGVnYXMiLCJzdWIiOiJtdmlsbGVnYXMiLCJpYXQiOjE3MzU4NzIzNDQsImV4cCI6MTczNTg3Mjk0NH0.VLWrL6joN_NWezmXA1TfaSPIASy0r2Kz5B_khsPBi8w"
+          eyJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvQ2l1ZGFkX3BlcnNvbmFfbGFzdE5hbWUiOiIiLCJ1c3VhcmlvQ2l1ZGFkX3BlcnNvbmFfZmlyc3ROYW1lIjoiIiwidXN1YXJpb19kbmkiOiIyNzE2NzE4NSIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9jdWlsIjoiIiwidXN1YXJpb19kaXNwbGF5bmFtZSI6Ik1hcnRpbiBWaWxsZWdhcyIsInVzdWFyaW9fdXNlck5hbWUiOiJtdmlsbGVnYXMiLCJzdWIiOiJtdmlsbGVnYXMiLCJpYXQiOjE3MzYzMzc4NjAsImV4cCI6MTczNjM4MTA2MH0.3Gxz_6885gIMFkUGPEweCJbl-FW_MFsINP1cFc3alYY"
         format: jwt
         type: string
   parameters:
@@ -102,7 +112,7 @@ components:
       schema:
         example:
           "Bearer
-          eyJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjo3MjQsInVzdWFyaW9fZGlzcGxheW5hbWUiOiJNYXJ0aW4gVmlsbGVnYXMiLCJ1c3VhcmlvX2RuaSI6IjI3MTY3MTg1IiwidXN1YXJpb0NpdWRhZF9wZXJzb25hX2ZpcnN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9sYXN0TmFtZSI6IiIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9jdWlsIjoiIiwidXN1YXJpb0NpdWRhZF9pZCI6IiIsInVzdWFyaW9fdXNlck5hbWUiOiJtdmlsbGVnYXMiLCJzdWIiOiJtdmlsbGVnYXMiLCJpYXQiOjE3MzU4NzIzNDQsImV4cCI6MTczNTg3Mjk0NH0.VLWrL6joN_NWezmXA1TfaSPIASy0r2Kz5B_khsPBi8w"
+          eyJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvQ2l1ZGFkX3BlcnNvbmFfbGFzdE5hbWUiOiIiLCJ1c3VhcmlvQ2l1ZGFkX3BlcnNvbmFfZmlyc3ROYW1lIjoiIiwidXN1YXJpb19kbmkiOiIyNzE2NzE4NSIsInVzdWFyaW9DaXVkYWRfcGVyc29uYV9jdWlsIjoiIiwidXN1YXJpb19kaXNwbGF5bmFtZSI6Ik1hcnRpbiBWaWxsZWdhcyIsInVzdWFyaW9fdXNlck5hbWUiOiJtdmlsbGVnYXMiLCJzdWIiOiJtdmlsbGVnYXMiLCJpYXQiOjE3MzYzMzc4NjAsImV4cCI6MTczNjM4MTA2MH0.3Gxz_6885gIMFkUGPEweCJbl-FW_MFsINP1cFc3alYY"
         format: jwt
         type: string
   schemas:
@@ -133,11 +143,11 @@ components:
       properties:
         detail:
           description: Descripción del problema
-          example: No value present
+          example: "Descripción del problema"
           type: string
         instance:
           description: El endpoint donde el problema ocurrió
-          example: "/generate"
+          example: "/"
           type: string
         status:
           description: HTTP status code
@@ -145,7 +155,7 @@ components:
           type: integer
         title:
           description: Nombre del problema
-          example: "NoSuchElementException"
+          example: "Exception"
           type: string
         timestamp:
           description: Fecha en formato ISO 8601
@@ -161,6 +171,30 @@ components:
           example: "about:blank"
           type: string
       type: object
+    ErrorBadCredentials:
+      allOf:
+        - $ref: '#/components/schemas/Error'
+        - type: object
+          properties:
+            detail:
+              example: "Bad credentials"
+            instance:
+              example: "/auth/login"
+            status:
+              example: 401
+            title:
+              example: "BadCredentialsException"
+    ErrorMethodArgumentNotValidException:
+      allOf:
+        - $ref: '#/components/schemas/Error'
+        - type: object
+          properties:
+            detail:
+              example: "Validation failed for argument[...]"
+            status:
+              example: 400
+            title:
+              example: "MethodArgumentNotValidException"
     LoginRequest:
       properties:
         password:
