@@ -1,5 +1,5 @@
 cors:
-  allowed-origins: https://munsl-sigem.vercel.app/
+  allowed-origins: https://munsl-sigem.vercel.app
   allowed-methods: GET, POST, PUT, DELETE, PATCH
   allowed-headers: "*"
   allow-credentials: true
@@ -9,6 +9,9 @@ jwt:
 management:
   endpoints:
     web:
+      cors:
+        allowed-methods: GET
+        allowed-origins: https://munsl-sigem.vercel.app
       exposure:
         include: info
   info:

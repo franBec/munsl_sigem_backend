@@ -1,11 +1,17 @@
 openapi: "3.0.2"
 info:
+  contact:
+    name: Pollito
+    url: https://pollito.dev
   description:
     Interfaz API de la Municipalidad Ciudad de San Luis - SIGEM Backend
   title: Municipalidad Ciudad de San Luis - SIGEM Backend
   version: "1.0"
 servers:
   - url: http://localhost:8080
+    description: dev
+  - url: https://munsl-sigem-backend.onrender.com
+    description: test
 paths:
   /actuator/info:
     get:
@@ -20,7 +26,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Build"
+                $ref: "#/components/schemas/ActuatorInfo"
   /auth/login:
     post:
       tags:
@@ -91,28 +97,32 @@ components:
         format: jwt
         type: string
   schemas:
-    Build:
+    ActuatorInfo:
       properties:
-        artifact:
-          description: Nombre del artefacto
-          example: "munsl_sigem_backend"
-          type: string
-        group:
-          description: Grupo de organización de la aplicación
-          example: "ar.gob.sanluislaciudad"
-          type: string
-        name:
-          description: Nombre de la aplicación
-          example: "munsl_sigem_backend"
-          type: string
-        time:
-          description: Fecha de la compilación en formato ISO 8601
-          example: "2024-01-04T15:30:00Z"
-          type: string
-        version:
-          description: Versión de la aplicación
-          example: "0.0.1-SNAPSHOT"
-          type: string
+        build:
+          description: Contiene la información de compilación de la aplicación
+          properties:
+            artifact:
+              description: Nombre del artefacto
+              example: "munsl_sigem_backend"
+              type: string
+            group:
+              description: Grupo de organización de la aplicación
+              example: "ar.gob.sanluislaciudad"
+              type: string
+            name:
+              description: Nombre de la aplicación
+              example: "munsl_sigem_backend"
+              type: string
+            time:
+              description: Fecha de la compilación en formato ISO 8601
+              example: "2024-01-04T15:30:00Z"
+              type: string
+            version:
+              description: Versión de la aplicación
+              example: "0.0.1-SNAPSHOT"
+              type: string
+          type: object
       type: object
     Error:
       properties:
