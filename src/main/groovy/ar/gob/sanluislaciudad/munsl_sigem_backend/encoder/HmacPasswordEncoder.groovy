@@ -1,4 +1,4 @@
-package ar.gob.sanluislaciudad.munsl_sigem_backend.security
+package ar.gob.sanluislaciudad.munsl_sigem_backend.encoder
 
 import ar.gob.sanluislaciudad.munsl_sigem_backend.config.properties.HmacConfigProperties
 import java.nio.charset.StandardCharsets
